@@ -6,8 +6,14 @@ from core import  models as core_models
 
 class List(core_models.TimeStampedModel):
     name = models.CharField(max_length=100)
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    rooms = models.ManyToManyField("rooms.Room", related_name="lists")
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="lists")
+    rooms = models.ManyToManyField("rooms.Room", related_name="rooms")
 
     def __str__(self):
         return self.name
+
+
+    def count_rooms(self):
+        return self.rooms.count()
+
+    count_rooms.short_description = "Number of rooms"

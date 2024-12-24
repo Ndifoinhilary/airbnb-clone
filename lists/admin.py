@@ -7,4 +7,4 @@ from lists.models import List
 
 @admin.register(List)
 class ListAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'user', 'count_rooms')

@@ -1,8 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 from core import models as core_models
-from users import models as User_Model
-
+from users import models as user_model
 
 # Create your models here.
 
@@ -62,8 +61,8 @@ class Photo(core_models.TimeStampedModel):
     Photo model Definition
     """
     caption = models.CharField(max_length=255)
-    file = models.ImageField()
-    room = models.ForeignKey("Room", on_delete=models.CASCADE)
+    file = models.ImageField(upload_to='photos/%Y/%m/%d')
+    room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.caption
@@ -89,11 +88,16 @@ class Room(AbstractItem):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instance_booked = models.BooleanField(default=False)
-    host = models.ForeignKey(User_Model.User, on_delete=models.CASCADE)
-    room_type = models.ForeignKey(RoomType, on_delete=models.SET_NULL, null=True)
-    amenities = models.ManyToManyField(Amenity)
-    facilities = models.ManyToManyField(Facility)
-    house_rules = models.ManyToManyField(HouseRule)
+    host = models.ForeignKey(user_model.User, on_delete=models.CASCADE, related_name="rooms")
+    room_type = models.ForeignKey(RoomType, on_delete=models.SET_NULL, null=True, related_name="rooms")
+    amenities = models.ManyToManyField(Amenity, related_name="rooms")
+    facilities = models.ManyToManyField(Facility,related_name="rooms")
+    house_rules = models.ManyToManyField(HouseRule,related_name="rooms")
 
     def __str__(self):
         return self.name
+
+    def total_rating(self):
+        reviews = self.reviews.all()
+        total = sum(review.average() for review in reviews)/len(reviews) if reviews else 0
+        return round(total, 2)
