@@ -10,7 +10,7 @@ from users import models
 @admin.register(models.User)
 class UserAdmin(UserAdmin):
    fieldsets = UserAdmin.fieldsets + (
-       ("Custom Profile", {"fields": ("avatar", "gender", "bio", "birthday", "language", "currency", "superhost")}),
+       ("Custom Profile", {"fields": ("avatar", "gender", "bio", "language", "currency", "superhost")}),
    )
 
 

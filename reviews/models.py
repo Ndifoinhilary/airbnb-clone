@@ -16,12 +16,12 @@ class Review(core_models.TimeStampedModel):
     """
 
     review = models.TextField()
-    cleanliness = models.IntegerField()
-    accuracy = models.IntegerField()
-    check_in = models.IntegerField()
-    communication = models.IntegerField()
-    location = models.IntegerField()
-    value = models.IntegerField()
+    cleanliness = models.PositiveIntegerField()
+    accuracy = models.PositiveIntegerField()
+    check_in = models.PositiveIntegerField()
+    communication = models.PositiveIntegerField()
+    location = models.PositiveIntegerField()
+    value = models.PositiveIntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='reviews')
 

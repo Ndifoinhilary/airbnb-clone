@@ -3,6 +3,7 @@ from django_countries.fields import CountryField
 from core import models as core_models
 from users import models as user_model
 
+
 # Create your models here.
 
 
@@ -90,14 +91,18 @@ class Room(AbstractItem):
     instance_booked = models.BooleanField(default=False)
     host = models.ForeignKey(user_model.User, on_delete=models.CASCADE, related_name="rooms")
     room_type = models.ForeignKey(RoomType, on_delete=models.SET_NULL, null=True, related_name="rooms")
-    amenities = models.ManyToManyField(Amenity, related_name="rooms")
-    facilities = models.ManyToManyField(Facility,related_name="rooms")
-    house_rules = models.ManyToManyField(HouseRule,related_name="rooms")
+    amenities = models.ManyToManyField(Amenity, related_name="rooms", blank=True)
+    facilities = models.ManyToManyField(Facility, related_name="rooms", blank=True)
+    house_rules = models.ManyToManyField(HouseRule, related_name="rooms",blank=True)
+
+    def save(self, *args, **kwargs):
+        self.city = str.capitalize(self.city)
+        super(Room, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
     def total_rating(self):
         reviews = self.reviews.all()
-        total = sum(review.average() for review in reviews)/len(reviews) if reviews else 0
+        total = sum(review.average() for review in reviews) / len(reviews) if reviews else 0
         return round(total, 2)

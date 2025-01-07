@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_countries',
 
+    # my apps
     'conversation',
     'lists',
     'users',
@@ -44,6 +45,9 @@ INSTALLED_APPS = [
     'rooms',
     'reviews',
     'core',
+
+#     third party apps
+    'django_seed',
 ]
 
 MIDDLEWARE = [

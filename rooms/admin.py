@@ -50,7 +50,7 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.house_rules.count()
 
 
-@admin.register(models.RoomType)
+@admin.register(models.RoomType, models.Amenity, models.Facility, models.HouseRule)
 class RoomTypeAdmin(admin.ModelAdmin):
     list_display = ['name', 'used_by']
 
@@ -58,12 +58,6 @@ class RoomTypeAdmin(admin.ModelAdmin):
         return obj.rooms.count()
 
 
-@admin.register(models.Facility)
-class FacilityAdmin(admin.ModelAdmin):
-    list_display = ['name', 'used_by']
-
-    def used_by(self, obj):
-        return obj.rooms.count()
 
 
 @admin.register(models.Photo)
@@ -78,10 +72,3 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 
-
-@admin.register(models.HouseRule)
-class HouseRuleAdmin(admin.ModelAdmin):
-    list_display = ['name', 'used_by']
-
-    def used_by(self, obj):
-        return obj.rooms.count()

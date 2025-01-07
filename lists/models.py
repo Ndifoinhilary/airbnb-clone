@@ -7,7 +7,7 @@ from core import  models as core_models
 class List(core_models.TimeStampedModel):
     name = models.CharField(max_length=100)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="lists")
-    rooms = models.ManyToManyField("rooms.Room", related_name="rooms")
+    rooms = models.ManyToManyField("rooms.Room", related_name="rooms", blank=True)
 
     def __str__(self):
         return self.name
