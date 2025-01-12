@@ -19,7 +19,7 @@ home
         <h2> By: {{room.host}} </h2>
         <h5>Amenities display</h5>
         <ul>
-            {% for amenity in amenities %}
+            {% for amenity in room.amenities.all %}
         <li>{{amenity.name}}</li>
         {% endfor %}
         </ul>

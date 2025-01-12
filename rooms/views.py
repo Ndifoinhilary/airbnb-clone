@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from rooms import models as rooms_models
 from rooms.models import Room
@@ -30,11 +30,19 @@ class HomeView(ListView):
 
 
 
-def room_details(request, pk):
-    room = get_object_or_404(rooms_models.Room, pk=pk)
-    amenities = room.amenities.all()
-    context = {
-        'room': room,
-        'amenities': amenities,
-    }
-    return  render(request, 'rooms/room_details.html', context)
+# def room_details(request, pk):
+#     room = get_object_or_404(rooms_models.Room, pk=pk)
+#     amenities = room.amenities.all()
+#     context = {
+#         'room': room,
+#         'amenities': amenities,
+#     }
+#     return  render(request, 'rooms/room_detail.html', context)
+
+
+class RoomDetailsView(DetailView):
+    """
+    Room DetailsView
+    the template name is room_detail.html
+    """
+    model = rooms_models.Room
