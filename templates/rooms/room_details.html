@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_name %}
+home
+{% endblock page_name %}
+
+{% block content %}
+
+<div class="row">
+    <div>
+        <h1>{{room.name}}</h1>
+        <hr/>
+        <h4>{{room.description}}</h4>
+    </div>
+
+    <div>
+        <h2> By: {{room.host}} </h2>
+        <h5>Amenities display</h5>
+        <ul>
+            {% for amenity in amenities %}
+        <li>{{amenity.name}}</li>
+        {% endfor %}
+        </ul>
+        <h5>Facilities</h5>
+           <ul>
+            {% for facility in room.facilities.all %}
+        <li>{{facility.name}}</li>
+        {% endfor %}
+        </ul>
+         <h5>House rules</h5>
+           <ul>
+            {% for rules in room.house_rules.all %}
+        <li>{{rules.name}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+
+    </div>
+</div>
+
+{% endblock content %}
